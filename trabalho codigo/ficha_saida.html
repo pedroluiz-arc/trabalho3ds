@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha de Saída e Histórico</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="app-header">
+            <div class="logo">
+                <div class="logo-text">CESF</div>
+            </div>
+            <h1>Ficha de Saída</h1>
+        </header>
+        <main>
+            <div class="tabs">
+                <button class="tab-button active" onclick="openTab(event, 'Ficha')">Ficha de Saída</button>
+                <button class="tab-button" onclick="openTab(event, 'Historico')">Histórico</button>
+            </div>
+
+            <div id="Ficha" class="tab-content" style="display: block;">
+                <div class="form-container">
+                    <form id="fichaSaidaForm">
+                        <div class="form-group">
+                            <label for="turma">Turma</label>
+                            <input type="text" id="turma" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="nomeProfessor">Nome do Professor</label>
+                            <input type="text" id="nomeProfessor" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="nomeAluno">Nome do Aluno</label>
+                            <input type="text" id="nomeAluno" required>
+                        </div>
+                        <div class="form-group-inline">
+                            <div class="form-group">
+                                <label for="horarioSaida">Horário Saída</label>
+                                <input type="time" id="horarioSaida" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="validoAte">Válido até</label>
+                                <input type="time" id="validoAte" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="motivo">Motivo</label>
+                            <textarea id="motivo" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="button-solicitar">SOLICITAR SAÍDA</button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="Historico" class="tab-content" style="display: none;">
+                <div class="list-container">
+                    <div class="list-item">
+                        <div class="item-info">
+                            <span class="item-time">09:20</span>
+                            <span class="item-name">NOME DO ALUNO</span>
+                        </div>
+                        <span class="status-liberado">LIBERADO</span>
+                    </div>
+                    <div class="list-item">
+                        <div class="item-info">
+                            <span class="item-time">10:10</span>
+                            <span class="item-name">NOME DO ALUNO</span>
+                        </div>
+                        <span class="status-liberado">LIBERADO</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tab-button");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+    </script>
+</body>
+</html> 

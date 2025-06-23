@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Área do Fiscal - Controle de Banheiro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Controle de Saída para Banheiro</h1>
+            <nav>
+                <button id="logoutBtn">Sair</button>
+            </nav>
+        </header>
+
+        <main>
+            <h2>Solicitar Saída para Banheiro</h2>
+            <form id="banheiroRequestForm">
+                <div class="form-group">
+                    <label for="professorName">Nome do Aluno:</label>
+                    <input type="text" id="professorName" required>
+                </div>
+                <div class="form-group">
+                    <label for="turma">Turma/Disciplina:</label>
+                    <input type="text" id="turma" required>
+                </div>
+                <div class="form-group">
+                    <label for="exitTime">Hora de Saída:</label>
+                    <input type="time" id="exitTime" required>
+                </div>
+                <button type="submit">Solicitar Saída</button>
+            </form>
+
+            <h2>Minhas Solicitações</h2>
+            <table id="requestsTable">
+                <thead>
+                    <tr>
+                        <th>Professor</th>
+                        <th>Turma/Disciplina</th>
+                        <th>Hora Saída</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Exemplo de linha com botões -->
+                    <tr>
+                        <td>Nome do Professor</td>
+                        <td>Turma XYZ</td>
+                        <td>10:00</td>
+                        <td>
+                            <span class="status-text">Pendente</span>
+                            <button class="btn-arrived" style="display:none">Aluno Retornou</button>
+                        </td>
+                        <td>
+                            <button class="btn-exited">Aluno Saiu</button>
+                            <button class="btn-timeout" style="display:none">Tempo Esgotado (+5min)</button>
+                        </td>
+                    </tr>
+                    <!-- Mais linhas podem ser acrescentadas aqui -->
+                </tbody>
+            </table>
+
+            <h2>Solicitações de Banheiro</h2>
+            <table id="pendingRequests">
+                <thead>
+                    <tr>
+                        <th>Professor</th>
+                        <th>Turma/Disciplina</th>
+                        <th>Hora Saída</th>
+                        <th>Tempo Decorrido</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Exemplo de linha com botões -->
+                    <tr>
+                        <td>Nome do Professor</td>
+                        <td>Turma ABC</td>
+                        <td>10:10</td>
+                        <td>5 min</td>
+                        <td>
+                            <button class="btn-exited">Aluno Saiu</button>
+                            <button class="btn-timeout" style="display:none">Tempo Esgotado (+5min)</button>
+                        </td>
+                    </tr>
+                    <!-- Mais linhas podem ser acrescentadas aqui -->
+                </tbody>
+            </table>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

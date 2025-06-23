@@ -1,0 +1,220 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #ffffff;
+    background-color: #1a1a1a;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 25px;
+    background: #2a2a2a;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    border: 1px solid #ff3333;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 2px solid #ff3333;
+    margin-bottom: 30px;
+}
+
+h1 {
+    color: #ff3333;
+    text-shadow: 1px 1px 2px #000;
+}
+
+h2 {
+    margin: 20px 0;
+    color: #ff3333;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #ff3333;
+    border-radius: 3px;
+}
+
+/* Formulários */
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+input, select, textarea, button {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ff3333;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #333333;
+    color: white;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #ff6666;
+    box-shadow: 0 0 8px #ff3333;
+}
+
+button {
+    background-color: #ff3333;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.3s;
+    border-radius: 8px;
+}
+
+button:hover {
+    background-color: #ff0000;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(255, 0, 0, 0.3);
+}
+
+#logoutBtn {
+    background-color: #1a1a1a;
+    border: 2px solid #ff3333;
+    max-width: 120px;
+}
+
+#logoutBtn:hover {
+    background-color: #ff3333;
+}
+
+.btn-return {
+    background-color: #1a1a1a;
+    border: 2px solid #00aa00;
+}
+
+.btn-return:hover {
+    background-color: #00aa00;
+}
+
+/* Tabelas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 25px 0;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ff3333;
+}
+
+th {
+    background-color: #ff3333;
+    color: white;
+    font-weight: bold;
+}
+
+tr {
+    background-color: #333333;
+    transition: background-color 0.3s;
+}
+
+tr:hover {
+    background-color: #444444;
+}
+
+/* Alertas */
+.alert-box {
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 8px;
+    display: none;
+    font-weight: bold;
+    text-align: center;
+}
+
+.alert-danger {
+    background-color: #330000;
+    color: #ff6666;
+    border: 2px solid #ff3333;
+    animation: pulse 2s infinite;
+}
+
+/* Login */
+.login-container {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 30px;
+    background: #2a2a2a;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+    border-radius: 15px;
+    border: 2px solid #ff3333;
+}
+
+.login-area h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: white;
+}
+
+/* Efeitos extras */
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(255, 50, 50, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(255, 50, 50, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 50, 50, 0); }
+}
+
+/* Botões adicionais */
+.btn-exited {
+    background-color: #1a1a1a;
+    border: 2px solid #ff3333;
+    margin-right: 5px;
+}
+
+.btn-exited:hover {
+    background-color: #ff3333;
+}
+
+.btn-timeout {
+    background-color: #1a1a1a;
+    border: 2px solid #ffcc00;
+    color: #ffcc00;
+}
+
+.btn-timeout:hover {
+    background-color: #ffcc00;
+    color: #1a1a1a;
+}
+
+.btn-arrived {
+    background-color: #1a1a1a;
+    border: 2px solid #00cc00;
+    margin-left: 5px;
+}
+
+.btn-arrived:hover {
+    background-color: #00cc00;
+    color: #1a1a1a;
+}
+
+.status-text {
+    display: inline-block;
+    min-width: 80px;
+}

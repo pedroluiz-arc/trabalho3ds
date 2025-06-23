@@ -1,0 +1,204 @@
+// Redirecionamento com base no tipo de usuário
+document.getElementById('loginForm')?.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const userType = document.getElementById('userType').value;
+    
+    if (userType === 'professor') {
+        window.location.href = 'banheiro.html';
+    } else if (userType === 'fiscal') {
+        window.location.href = 'fiscal.html';
+    }
+});
+
+// Logout
+document.getElementById('logoutBtn')?.addEventListener('click', function() {
+    window.location.href = 'index.html';
+});
+
+// Gerenciamento de solicitações de banheiro (professor)
+if (document.getElementById('banheiroRequestForm')) {
+    document.getElementById('banheiroRequestForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const professorName = document.getElementById('professorName').value;
+        const turma = document.getElementById('turma').value;
+        const exitTime = document.getElementById('exitTime').value;
+
+        const table = document.querySelector('#requestsTable tbody');
+        const newRow = table.insertRow();
+
+        newRow.innerHTML = `
+            <td>${professorName}</td>
+            <td>${turma}</td>
+            <td>${exitTime}</td>
+            <td>
+                <span class="status-text">Pendente</span>
+                <button class="btn-arrived" style="display:none">Aluno Retornou</button>
+            </td>
+        `;
+
+        this.reset();
+
+        setTimeout(() => {
+            updateFiscalTable(professorName, turma, exitTime);
+            showTimeAlert(exitTime);
+            setupProfessorButtons();
+        }, 1000);
+    });
+}
+
+// Função que mostra o botão de retorno para professor e loga no console
+function updateFiscalTable(professorName, turma, exitTime) {
+    console.log('Solicitação enviada para o fiscal:', {
+        professorName, turma, exitTime
+    });
+
+    document.querySelectorAll('#requestsTable tbody tr').forEach(row => {
+        if (row.cells[0].textContent === professorName &&
+            row.cells[2].textContent === exitTime) {
+            row.querySelector('.btn-arrived').style.display = 'inline-block';
+        }
+    });
+}
+
+// Função para mostrar alerta de tempo no banheiro
+function showTimeAlert(exitTime) {
+    if (document.getElementById('timeAlert')) {
+        const alertBox = document.getElementById('timeAlert');
+        const now = new Date();
+        const [hours, minutes] = exitTime.split(':');
+        const exitDateTime = new Date();
+        exitDateTime.setHours(hours, minutes, 0, 0);
+
+        const timeDiff = (now - exitDateTime) / (1000 * 60);
+
+        if (timeDiff > 5) {
+            alertBox.textContent = `ATENÇÃO: O professor está no banheiro há ${Math.round(timeDiff)} minutos!`;
+            alertBox.className = 'alert-box alert-danger';
+            alertBox.style.display = 'block';
+        }
+    }
+}
+
+// Função para configurar botões no lado do professor
+function setupProfessorButtons() {
+    document.querySelectorAll('.btn-arrived').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const row = this.closest('tr');
+            row.style.backgroundColor = '#006600';
+            this.style.display = 'none';
+            row.querySelector('.status-text').textContent = 'Concluído';
+        });
+    });
+}
+
+// Tabela do fiscal (com botões e contagem)
+if (document.getElementById('pendingRequests')) {
+    const sampleRequests = [
+        ['Carlos Silva', 'Matemática - 8ºA', '14:00'],
+        ['Ana Oliveira', 'Português - 9ºB', '14:15']
+    ];
+
+    const table = document.querySelector('#pendingRequests tbody');
+
+    sampleRequests.forEach(request => {
+        const newRow = table.insertRow();
+        const exitTime = request[2];
+        const now = new Date();
+        const [hours, minutes] = exitTime.split(':');
+        const exitDateTime = new Date();
+        exitDateTime.setHours(hours, minutes, 0, 0);
+        const timeDiff = Math.floor((now - exitDateTime) / (1000 * 60));
+
+        newRow.innerHTML = `
+            <td>${request[0]}</td>
+            <td>${request[1]}</td>
+            <td>${exitTime}</td>
+            <td>${timeDiff > 0 ? timeDiff + ' min' : 'Agora'}</td>
+            <td>
+                <button class="btn-exited">Aluno Saiu</button>
+                <button class="btn-timeout" style="display:none">Tempo Esgotado (+5min)</button>
+                <button class="btn-return">Retornou</button>
+            </td>
+        `;
+
+        if (timeDiff > 5) {
+            newRow.style.backgroundColor = '#330000';
+        }
+    });
+
+    setupFiscalButtons();
+
+    document.querySelectorAll('.btn-return').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const row = this.closest('tr');
+            row.style.backgroundColor = '#003300';
+            row.cells[4].innerHTML = 'Finalizado';
+            this.disabled = true;
+        });
+    });
+}
+
+// Atualiza cor das linhas a cada minuto
+if (document.getElementById('timeAlert')) {
+    setInterval(() => {
+        const now = new Date();
+        document.querySelectorAll('#pendingRequests tbody tr').forEach(row => {
+            const exitTime = row.cells[2].textContent;
+            const [hours, minutes] = exitTime.split(':');
+            const exitDateTime = new Date();
+            exitDateTime.setHours(hours, minutes, 0, 0);
+            const timeDiff = Math.floor((now - exitDateTime) / (1000 * 60));
+
+            if (timeDiff > 5) {
+                row.style.backgroundColor = '#330000';
+                row.cells[3].textContent = timeDiff + ' min';
+            }
+        });
+    }, 60000);
+}
+
+// Botões "Aluno Saiu" e "Tempo Esgotado"
+function setupFiscalButtons() {
+    document.querySelectorAll('.btn-exited').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const row = this.closest('tr');
+            row.style.backgroundColor = '#003366';
+            this.style.display = 'none';
+            const timeoutBtn = row.querySelector('.btn-timeout');
+            timeoutBtn.style.display = 'inline-block';
+            startCountdown(row, timeoutBtn);
+        });
+    });
+
+    document.querySelectorAll('.btn-timeout').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const row = this.closest('tr');
+            addExtraTime(row);
+        });
+    });
+}
+
+function startCountdown(row, timeoutBtn) {
+    let minutes = 5;
+    const countdown = setInterval(() => {
+        timeoutBtn.textContent = `Tempo Esgotado (${minutes}min)`;
+        minutes--;
+
+        if (minutes < 0) {
+            clearInterval(countdown);
+            row.style.backgroundColor = '#660000';
+            timeoutBtn.textContent = 'Tempo Esgotado (+5min)';
+        }
+    }, 60000);
+}
+
+function addExtraTime(row) {
+    const timeCell = row.cells[3];
+    const currentTime = parseInt(timeCell.textContent) || 0;
+    timeCell.textContent = (currentTime + 5) + ' min';
+    row.style.backgroundColor = '#990000';
+
+    const timeoutBtn = row.querySelector('.btn-timeout');
+    startCountdown(row, timeoutBtn);
+}

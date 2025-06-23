@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Área do Fiscal</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Área do Fiscal - Controle de Banheiro</h1>
+            <nav>
+                <button id="logoutBtn">Sair</button>
+            </nav>
+        </header>
+
+        <main>
+            <div class="alert-box" id="timeAlert"></div>
+
+            <h2>Solicitações de Banheiro</h2>
+            <table id="pendingRequests">
+                <thead>
+                    <tr>
+                        <th>Aluno</th>
+                        <th>Turma/Disciplina</th>
+                        <th>Hora Saída</th>
+                        <th>Tempo Decorrido</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Exemplo de linha com botões -->
+                    <tr>
+                        <td>Nome do Aluno</td>
+                        <td>Turma XYZ</td>
+                        <td>10:00</td>
+                        <td>5 min</td>
+                        <td>
+                            <button class="btn-exited">Aluno Saiu</button>
+                            <button class="btn-timeout" style="display:none">Tempo Esgotado (+5min)</button>
+                        </td>
+                    </tr>
+                    <!-- Mais linhas podem ser acrescentadas aqui -->
+                </tbody>
+            </table>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
